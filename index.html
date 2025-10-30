@@ -3,24 +3,97 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>運命のQRコード</title>
+<title>運命のQRコード 🎃</title>
 <style>
-body { font-family: "Segoe UI", sans-serif; text-align: center; padding: 2em; }
-input { padding: 0.5em; font-size: 1em; }
-button { padding: 0.5em 1em; margin-left: 0.5em; font-size: 1em; cursor: pointer; }
-#result { margin-top: 1.5em; font-size: 1.4em; font-weight: bold; }
+  body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #2c003e, #000);
+    color: #fff;
+    text-align: center;
+    padding: 40px 20px;
+    min-height: 100vh;
+    background-image: url('https://images.unsplash.com/photo-1508057198894-247b23fe5ade?auto=format&fit=crop&w=800&q=60');
+    background-size: cover;
+    background-position: center;
+  }
+  h1 {
+    font-size: 2em;
+    color: #ff9900;
+    text-shadow: 2px 2px 5px #000;
+  }
+  #seat {
+    font-size: 2.2em;
+    font-weight: bold;
+    margin: 30px 0;
+    background: rgba(0,0,0,0.6);
+    padding: 15px 25px;
+    border-radius: 15px;
+    display: inline-block;
+  }
+  input[type="number"] {
+    padding: 10px;
+    font-size: 1.2em;
+    border-radius: 8px;
+    border: none;
+    width: 100px;
+    text-align: center;
+  }
+  button {
+    background-color: #ff6600;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    font-size: 1.1em;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 15px;
+  }
+  button:hover {
+    background-color: #ff9900;
+  }
+  #result {
+    margin-top: 25px;
+    font-size: 1.6em;
+    font-weight: bold;
+    color: #ffcc00;
+    text-shadow: 1px 1px 4px black;
+  }
 </style>
 </head>
 <body>
-<h2>運命のQRコード 🎯</h2>
-<p id="seat"></p>
-<div id="pinSection">
-  <p>懇親会終盤に司会者が発表するPINを入力してください。</p>
-  <input type="number" id="pinInput" placeholder="PINを入力">
-  <button onclick="checkPin()">送信</button>
-</div>
-<p id="result"></p>
+  <h1>🎃 運命のQRコード 🎃</h1>
+  <div id="seat"></div>
+  <div id="pinSection">
+    <p>PINコードを入力して抽選結果をチェック！</p>
+    <input type="number" id="pinInput" placeholder="PIN">
+    <br>
+    <button onclick="checkPin()">結果を表示</button>
+  </div>
+  <div id="result"></div>
 
-<script src="script.js"></script>
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const seatId = urlParams.get('id');
+document.getElementById("seat").textContent = "あなたの席は No." + seatId + " です！";
+
+// 固定設定
+const PIN = "1031";
+const winners = [9, 17]; // 当たりの席番号
+
+function checkPin() {
+  const inputPin = document.getElementById("pinInput").value;
+  const resultDiv = document.getElementById("result");
+
+  if (inputPin === PIN) {
+    if (winners.includes(Number(seatId))) {
+      resultDiv.textContent = "🎉 幹事おめでとう！🎉";
+    } else {
+      resultDiv.textContent = "✅ セーフ！";
+    }
+  } else {
+    resultDiv.textContent = "❌ PINコードが違います";
+  }
+}
+</script>
 </body>
 </html>
